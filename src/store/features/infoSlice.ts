@@ -72,7 +72,7 @@ export const infoSlice = createSlice({
     initialState,
     reducers: {
         // 채색 타입 변경
-        setColorType: (state, action: PayloadAction<'full-color' | 'simple-color'>) => {
+        setColorType: (state, action: PayloadAction<'full-color' | 'simple-color' | 'rough-sketch'>) => {
             state.colorType = action.payload;
             calculateEstimate(state);
         },
