@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface infoState {
-    colorType: 'full-color' | 'simple-color';
+    colorType: 'full-color' | 'simple-color' | 'rough-sketch';
     charCount: number;
     coverage: 'half' | 'full-body';
     hasProps: boolean;
@@ -35,6 +35,12 @@ const calculateEstimate = (state: infoState) => {
             fullBodyExtra: 10000,
             propsExtra: 5000,
             discountUnit: 5000,
+        },
+        'rough-sketch': {
+            basePrice: 10000,
+            fullBodyExtra: 10000,
+            propsExtra: 5000,
+            discountUnit: 0,
         },
     };
 

@@ -27,6 +27,7 @@ export default function Home() {
     const colorTypeList = [
         { index: 'full-color', buttonName: '풀채색' },
         { index: 'simple-color', buttonName: '간단채색' },
+        { index: 'rough-sketch', buttonName: '단색 낙서' },
     ] as const;
     const coverageList = [
         { index: 'half', buttonName: '흉상/반신' },
@@ -47,7 +48,13 @@ export default function Home() {
             <div className="main-page py-5 px-4 flex flex-col gap-4">
                 <div className="section-colortype section-layout">
                     <h2 className={sectionTitleStyle}>Q1. 컬러 타입</h2>
-                    <p className={sectionSubStyle}></p>
+                    <p className={sectionSubStyle}>
+                        {colorType === 'full-color'
+                            ? '밑색과 명암, 효과 등이 포함되는 디테일한 채색 타입입니다.'
+                            : colorType === 'simple-color'
+                              ? '선화로 디테일을 표현하며, 밑색만 포함되는 채색 타입입니다.'
+                              : '간단한 스케치를 단색으로 채우는 빠른 낙서 타입입니다.'}
+                    </p>
 
                     <div className="radio-section">
                         {colorTypeList.map((item, idx) => (
@@ -84,7 +91,11 @@ export default function Home() {
                 </div>
                 <div className="section-coverage section-layout">
                     <h2 className={sectionTitleStyle}>Q3. 노출 범위</h2>
-                    <p className={sectionSubStyle}>흉상/반신이 기본 옵션입니다.</p>
+                    <p className={sectionSubStyle}>
+                        {coverage === 'half'
+                            ? '캐릭터의 머리부터 골반까지 포함합니다.'
+                            : '캐릭터의 머리부터 허벅지, 또는 전신을 포함합니다.'}
+                    </p>
                     <div className="radio-section">
                         {coverageList.map((item, idx) => (
                             <RadioButton
@@ -156,9 +167,14 @@ export default function Home() {
                 </div>
                 <div className="section-discount section-layout">
                     <h2 className={sectionTitleStyle}>Q7. 여성 캐릭터 수</h2>
-                    <p className={sectionSubStyle}>여성 캐릭터가 포함된 경우 금액이 할인됩니다.</p>
+                    <p className={sectionSubStyle}>
+                        {colorType === 'rough-sketch'
+                            ? '단색 낙서 타입의 경우 여성 캐릭터 할인이 적용되지 않습니다.'
+                            : '여성 캐릭터가 포함된 경우 금액이 할인됩니다.'}
+                    </p>
                     <div>
                         <input
+                            disabled={colorType === 'rough-sketch'}
                             type="number"
                             value={discountCount}
                             className="w-full px-4 py-2 border border-zinc-400 rounded-xl"
@@ -180,7 +196,13 @@ export default function Home() {
                     수 있습니다.
                 </div>
                 <a
-                    href="https://kre.pe/W5NM"
+                    href={
+                        colorType === 'full-color'
+                            ? 'https://kre.pe/xymE'
+                            : colorType === 'simple-color'
+                              ? 'https://kre.pe/nq1z'
+                              : 'https://kre.pe/vWAo'
+                    }
                     target="_blank"
                     className="w-full py-4 px-8 my-2 flex flex-row items-center justify-between rounded-full text-xl font-medium text-white bg-indigo-500 "
                 >
@@ -188,7 +210,7 @@ export default function Home() {
                 </a>
             </div>
             {/* 총 합계 */}
-            <div className="section-total-estimate sticky bottom-0 w-full max-width-2xl flex flex-row justify-between items-center px-4 py-6 bg-zinc-900 text-white">
+            <div className="section-total-estimate sticky bottom-0 w-full max-width-2xl flex flex-row justify-between items-center px-4 py-6 rounded-t-2xl bg-zinc-900 text-white">
                 <div className="text-xl">합계</div>
                 <div className="font-bold text-4xl">{formatPrice(totalEstimate)}원</div>
             </div>
