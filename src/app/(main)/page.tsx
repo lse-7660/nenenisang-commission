@@ -71,11 +71,11 @@ export default function Home() {
                 <div className="section-charnum section-layout">
                     <h2 className={sectionTitleStyle}>Q2. 캐릭터 수</h2>
                     <p className={sectionSubStyle}>기본 1인이며, 3명까지 선택할 수 있습니다.</p>
-                    <div className="flex flex-row">
-                        <input
+
+                    {/* <input
                             type="number"
                             value={charCount}
-                            className="w-full px-4 py-2 border border-zinc-400 rounded-xl"
+                            className="w-full px-4 py-2 border border-zinc-400 rounded-lg"
                             onChange={(e) => {
                                 const val = e.target.value;
                                 if (val === '') {
@@ -86,8 +86,19 @@ export default function Home() {
                                     dispatch(setCharCount(num));
                                 }
                             }}
-                        />
-                    </div>
+                        /> */}
+                    <select
+                        value={charCount}
+                        className="w-full px-4 py-2 border border-zinc-400 rounded-lg bg-white"
+                        onChange={(e) => {
+                            const num = Number(e.target.value);
+                            dispatch(setCharCount(num));
+                        }}
+                    >
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                    </select>
                 </div>
                 <div className="section-coverage section-layout">
                     <h2 className={sectionTitleStyle}>Q3. 노출 범위</h2>
@@ -172,7 +183,7 @@ export default function Home() {
                             ? '단색 낙서 타입의 경우 여성 캐릭터 할인이 적용되지 않습니다.'
                             : '여성 캐릭터가 포함된 경우 금액이 할인됩니다.'}
                     </p>
-                    <div>
+                    {/* <div>
                         <input
                             disabled={colorType === 'rough-sketch'}
                             type="number"
@@ -189,7 +200,25 @@ export default function Home() {
                                 }
                             }}
                         />
-                    </div>
+                    </div> */}
+                    <select
+                        disabled={colorType === 'rough-sketch'}
+                        value={discountCount}
+                        className="w-full px-4 py-2 border border-zinc-400 rounded-lg bg-white"
+                        onChange={(e) => {
+                            const num = Number(e.target.value);
+                            dispatch(setDiscountCount(num));
+                        }}
+                    >
+                        {Array.from({ length: (charCount || 0) + 1 }, (_, i) => {
+                            const value = i;
+                            return (
+                                <option key={value} value={value}>
+                                    {value}
+                                </option>
+                            );
+                        })}
+                    </select>
                 </div>
                 <div className="notice text-sm leading-1.2 font-light">
                     본 견적은 임시 견적으로, 신청서에 작성된 캐릭터 디자인과 구도 등에 따라 할인되거나 추가금이 발생할
